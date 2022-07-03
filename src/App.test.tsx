@@ -1,8 +1,22 @@
-import { render } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
+
 import App from './App'
 
-test('sum', () => {
-    const { getByText } = render(<App/>)
-    
-    expect(getByText('Hello World')).toHaveAttribute('class', 'test')
+describe('App Component', () => {
+    it('should render list items', () => {
+        render(<App/>)
+
+        expect(screen.getByText('Joao')).toBeInTheDocument()
+        expect(screen.getByText('Mario')).toBeInTheDocument()
+        expect(screen.getByText('Mayk')).toBeInTheDocument()
+    })
+
+    it('should be able to add new item to list', () => {
+        render(<App/>)
+
+        const addButton = screen.getByText('Adicionar')
+
+        fireEvent.click(addButton)
+        expect(screen.getByText('Novo')).toBeInTheDocument()
+    })
 })
