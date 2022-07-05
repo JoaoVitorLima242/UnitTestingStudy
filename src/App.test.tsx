@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, getByText } from '@testing-library/react'
 import userEvent  from '@testing-library/user-event'
 
 import App from './App'
@@ -21,6 +21,8 @@ describe('App Component', () => {
         userEvent.type(inputElement, 'Novo')
         userEvent.click(addButton)
 
-        expect(await screen.findByText('Novo')).toBeInTheDocument()
+        await waitFor(() => {
+            expect(screen.getByText('Novo')).toBeInTheDocument()
+        })
     })
 })
