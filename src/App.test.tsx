@@ -12,7 +12,7 @@ describe('App Component', () => {
         expect(screen.getByText('Mayk')).toBeInTheDocument()
     })
 
-    it('should be able to add new item to list', () => {
+    it('should be able to add new item to list', async () => {
         render(<App/>)
 
         const inputElement = screen.getByLabelText('New item', {selector: 'input'})
@@ -21,6 +21,6 @@ describe('App Component', () => {
         userEvent.type(inputElement, 'Novo')
         userEvent.click(addButton)
 
-        expect(screen.getByText('Novo')).toBeInTheDocument()
+        expect(await screen.findByText('Novo')).toBeInTheDocument()
     })
 })
