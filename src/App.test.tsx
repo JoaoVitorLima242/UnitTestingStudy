@@ -32,8 +32,8 @@ describe('App Component', () => {
         
         userEvent.click(removeButtons[0])
 
-        await waitForElementToBeRemoved(() => {
-            return screen.queryByText('Joao')
+        await waitFor(() => {
+            expect(screen.queryByText('Joao')).not.toBeInTheDocument()
         })
     })
 })
