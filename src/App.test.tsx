@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, getByText } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, getByText, waitForElementToBeRemoved } from '@testing-library/react'
 import userEvent  from '@testing-library/user-event'
 
 import App from './App'
@@ -23,6 +23,17 @@ describe('App Component', () => {
 
         await waitFor(() => {
             expect(screen.getByText('Novo')).toBeInTheDocument()
+        })
+    })
+    it('should be able to remove item from the list', async () => {
+        render(<App/>)
+
+        const removeButtons = screen.getAllByText('Remover')
+        
+        userEvent.click(removeButtons[0])
+
+        await waitForElementToBeRemoved(() => {
+            return screen.queryByText('Joao')
         })
     })
 })
