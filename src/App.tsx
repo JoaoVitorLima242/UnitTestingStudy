@@ -1,35 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
 function App() {
+  const [list, setList] = useState(['Joao', 'Pedro', 'Vitor'])
   const [newItem, setNewItem] = useState('')
-  const [list, setList] = useState(['Joao', 'Mario', 'Mayk'])
 
-  function addToList () {
-    setTimeout(() => {
-      setList(state => [...state, newItem])
-    }, 500)
-  }
-
-  function RemoveFromList (item: string) {
-    setTimeout(() => {
-      setList(state => state.filter(listItem => listItem !== item))
-    }, 500)
+  const addToList = (newItem: string) => {
+    setList(state => [...state, newItem])
   }
 
   return (
     <div>
-      <label>
-        New item
-        <input placeholder='add new text' type="text" onChange={e => setNewItem(e.target.value)} />
-      </label>
-      <button onClick={addToList}>Adicionar</button>
+      <input type="text" placeholder="new item" onChange={(e) => setNewItem(e.target.value)}/>
+      <button onClick={() => addToList(newItem)}>Add to list</button>
       <ul>
-        {list.map(item => (
-          <li key={item}>
-            {item}
-            <button onClick={() => RemoveFromList(item)}>Remover</button>
-          </li>
-        ))}
+        {list.map(item => (<li key={item}>{item}</li>))}
       </ul>
     </div>
   );
