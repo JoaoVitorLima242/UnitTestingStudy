@@ -1,5 +1,5 @@
 /* eslint-disable testing-library/no-debugging-utils */
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react'
 import UserEvent from '@testing-library/user-event'
 import App from './App'
 import userEvent from '@testing-library/user-event'
@@ -18,15 +18,24 @@ describe('App Component', () => {
 
         screen.debug()
         
+        const removeButton = screen.getByTestId('Joao Remove')
         const addButton = screen.getByText('Add to list')
         const inputElement = screen.getByPlaceholderText('new item')
-
+        
         userEvent.type(inputElement, 'Novo')
         UserEvent.click(addButton)
-        
-        await waitFor(async () => {
-            expect(screen.getByText('Novo')).toBeInTheDocument()
+        screen.debug()
 
+        
+        UserEvent.click(removeButton)
+        
+        screen.debug()
+        await waitFor(() => {
+            expect(screen.getByText('Novo')).toBeInTheDocument()
+        })
+
+        await waitFor(() => {
+            expect(screen.queryByText('Joao')).not.toBeInTheDocument()
         })
     })
 })

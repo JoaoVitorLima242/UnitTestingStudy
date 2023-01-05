@@ -9,13 +9,23 @@ function App() {
       setList(state => [...state, newItem])
     }, 500)
   }
+  const removeFromList = (removeItem: string) => {
+    setTimeout(() => {
+      setList(state => state.filter(item => item !== removeItem))
+    }, 500)
+  }
 
   return (
     <div>
       <input type="text" placeholder="new item" onChange={(e) => setNewItem(e.target.value)}/>
       <button onClick={() => addToList(newItem)}>Add to list</button>
       <ul>
-        {list.map(item => (<li key={item}>{item}</li>))}
+        {list.map(item => (
+            <li key={item}>
+              {item}
+              <button data-testid={item + ' Remove'} onClick={() => removeFromList(item)}>Remove</button>
+            </li>
+        ))}
       </ul>
     </div>
   );
