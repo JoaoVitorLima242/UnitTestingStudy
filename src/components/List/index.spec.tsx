@@ -1,35 +1,30 @@
 /* eslint-disable testing-library/no-debugging-utils */
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import UserEvent from '@testing-library/user-event'
-import App from './App'
-import userEvent from '@testing-library/user-event'
+import { List } from '.'
 
-describe('App Component', () => {
+describe('List Component', () => {
+    
     it('Should render list items', () => {
-        render(<App />)
-
+        render(<List initialItems={['Joao', 'Pedro', 'Vitor']} />)
         expect(screen.getByText('Joao')).toBeInTheDocument()
         expect(screen.getByText('Pedro')).toBeInTheDocument()
         expect(screen.getByText('Vitor')).toBeInTheDocument()
+        
     })
     
-    it('Should be able to add new item to the lsit', async () => {
-        render(<App />)
+    it('Should be able to add new item to the list', async () => {
+        render(<List initialItems={['Joao', 'Pedro', 'Vitor']} />)
 
-        screen.debug()
-        
         const removeButton = screen.getByTestId('Joao Remove')
         const addButton = screen.getByText('Add to list')
         const inputElement = screen.getByPlaceholderText('new item')
         
-        userEvent.type(inputElement, 'Novo')
+        UserEvent.type(inputElement, 'Novo')
         UserEvent.click(addButton)
-        screen.debug()
-
         
         UserEvent.click(removeButton)
         
-        screen.debug()
         await waitFor(() => {
             expect(screen.getByText('Novo')).toBeInTheDocument()
         })
