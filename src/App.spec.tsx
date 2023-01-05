@@ -1,5 +1,5 @@
 /* eslint-disable testing-library/no-debugging-utils */
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import UserEvent from '@testing-library/user-event'
 import App from './App'
 import userEvent from '@testing-library/user-event'
@@ -13,7 +13,7 @@ describe('App Component', () => {
         expect(screen.getByText('Vitor')).toBeInTheDocument()
     })
     
-    it('Should be able to add new item to the lsit', () => {
+    it('Should be able to add new item to the lsit', async () => {
         render(<App />)
 
         screen.debug()
@@ -24,10 +24,10 @@ describe('App Component', () => {
         userEvent.type(inputElement, 'Novo')
         UserEvent.click(addButton)
         
-        screen.debug()
+        await waitFor(async () => {
+            expect(screen.getByText('Novo')).toBeInTheDocument()
 
-        expect(screen.getByText('Novo')).toBeInTheDocument()
-
+        })
     })
 })
     

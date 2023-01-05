@@ -5,7 +5,9 @@ function App() {
   const [newItem, setNewItem] = useState('')
 
   const addToList = (newItem: string) => {
-    setList(state => [...state, newItem])
+    setTimeout(() => {
+      setList(state => [...state, newItem])
+    }, 500)
   }
 
   return (
